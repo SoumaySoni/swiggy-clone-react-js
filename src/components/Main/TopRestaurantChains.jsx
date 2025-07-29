@@ -3,24 +3,25 @@ import "./whatsOnYourMind.css";
 import { useEffect, useState, useRef } from "react";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { ReactComponent as GreenStar } from '../../assets/green_star.svg';
 
 const TopRestaurantChains = () => {
 
-    const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef(null);
 
-    const scrollLeft = () => {
-      scrollContainerRef.current.scrollBy({
-        left: -1136, // Adjust the scroll distance (e.g., scroll 200px left)
-        behavior: "smooth", // Smooth scrolling effect
-      });
-    };
+  const scrollLeft = () => {
+    scrollContainerRef.current.scrollBy({
+      left: -1136, // Adjust the scroll distance (e.g., scroll 200px left)
+      behavior: "smooth", // Smooth scrolling effect
+    });
+  };
 
-    const scrollRight = () => {
-      scrollContainerRef.current.scrollBy({
-        left: 1136, // Adjust the scroll distance (e.g., scroll 200px right)
-        behavior: "smooth", // Smooth scrolling effect
-      });
-    };
+  const scrollRight = () => {
+    scrollContainerRef.current.scrollBy({
+      left: 1136, // Adjust the scroll distance (e.g., scroll 200px right)
+      behavior: "smooth", // Smooth scrolling effect
+    });
+  };
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,7 +31,7 @@ const TopRestaurantChains = () => {
   const imgUrl =
     "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
 
-    
+
 
   useEffect(() => {
     const DataFetchingComponent = async () => {
@@ -81,13 +82,28 @@ const TopRestaurantChains = () => {
           (item) => {
             const img = imgUrl + item.info.cloudinaryImageId;
             return (
-              <div className="inline-flex mt-5 mr-10">
-                <div className="w-[273px] h-[182px] shadow-lg rounded-[40px]">
+              <div className="inline-flex flex-col items-center mt-5 mr-10">
+                <div className="w-[250px] h-[182px] shadow-lg rounded-[40px]">
                   <img
-                    className="cursor-pointer object-fill w-[273px] h-[182px] rounded-[40px]"
+                    className="cursor-pointer object-fill w-[250px] h-[182px] rounded-[40px]"
                     src={img}
                     key={item.info.id}
                   />
+                </div>
+                <div className="flex flex-col w-full mt-2 ml-3">
+                  <h5 className="mt-2 text-lg font-semibold">{item.info.name}</h5>
+                  <div className="flex items-center gap-1">
+                    <GreenStar className="" />
+                    <p className="text-gray-600">
+                      {item.info.avgRatingString}
+                    </p>
+                    <p className="text-black font-semibold">
+                      <span>&#8226;</span> {item.info.sla.slaString}
+                    </p>
+                  </div>
+                  <p className="text-gray-600">
+                    {item.info.cuisines.join(", ")}
+                  </p>
                 </div>
               </div>
             );
