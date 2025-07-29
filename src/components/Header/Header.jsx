@@ -17,7 +17,7 @@ const Header = () => {
         <div className="headerlist">
           <ul className="flex gap-[70px]">
             <li className="flex items-center gap-2">
-              <IoBagSharp />
+              <IoBagSharp className="cursor-pointer"/>
               <a href="#">Swiggy Cooperate</a>
             </li>
             <li className="flex items-center gap-2">

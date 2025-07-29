@@ -1,38 +1,36 @@
-import React, { useEffect, useState, useRef } from "react";
-import './whatsOnYourMind.css'
+import React from "react";
+import "./whatsOnYourMind.css";
+import { useEffect, useState, useRef } from "react";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 
+const TopRestaurantChains = () => {
 
+    const scrollContainerRef = useRef(null);
 
-
-const WhatsOnYourMind = () => {
-
-  const scrollContainerRef = useRef(null);
     const scrollLeft = () => {
       scrollContainerRef.current.scrollBy({
         left: -1136, // Adjust the scroll distance (e.g., scroll 200px left)
         behavior: "smooth", // Smooth scrolling effect
       });
-  };
-  
-  const scrollRight = () => {
-    scrollContainerRef.current.scrollBy({
-      left: 1136, // Adjust the scroll distance (e.g., scroll 200px right)
-      behavior: "smooth", // Smooth scrolling effect
-    });
-  };
+    };
 
-
+    const scrollRight = () => {
+      scrollContainerRef.current.scrollBy({
+        left: 1136, // Adjust the scroll distance (e.g., scroll 200px right)
+        behavior: "smooth", // Smooth scrolling effect
+      });
+    };
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const url =
     "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.449923&lng=80.3318736&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
+
   const imgUrl =
-    "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/";
-  
-  
+    "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
+
+    
 
   useEffect(() => {
     const DataFetchingComponent = async () => {
@@ -56,15 +54,15 @@ const WhatsOnYourMind = () => {
     };
     DataFetchingComponent();
   }, []);
+  0;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
- 
   return (
     <>
       <div className="flex items-center mx-[200px]">
         <h1 className="container pt-4 text-2xl font-bold">
-          {data.data.cards[0].card.card.header.title}
+          {data.data.cards[1].card.card.header.title}
         </h1>
         <div className="flex items-center gap-8">
           <button onClick={scrollLeft} className="">
@@ -75,33 +73,31 @@ const WhatsOnYourMind = () => {
           </button>
         </div>
       </div>
-
       <div
         className="flex mx-[200px] mt-3 overflow-x-auto scrollbar-hidden"
         ref={scrollContainerRef}
       >
-        {data.data.cards[0].card.card.gridElements.infoWithStyle.info.map(
+        {data.data.cards[1].card.card.gridElements.infoWithStyle.restaurants.map(
           (item) => {
-            const img = imgUrl + item.imageId;
+            const img = imgUrl + item.info.cloudinaryImageId;
             return (
-              <img
-                className="w-[145px] mr-[20px] cursor-pointer"
-                src={img}
-                key={item.id}
-              />
+              <div className="inline-flex mt-5 mr-10">
+                <div className="w-[273px] h-[182px] shadow-lg rounded-[40px]">
+                  <img
+                    className="cursor-pointer object-fill w-[273px] h-[182px] rounded-[40px]"
+                    src={img}
+                    key={item.info.id}
+                  />
+                </div>
+              </div>
             );
           }
         )}
       </div>
-      <hr className="border-t w-[1130px] my-[40px] mx-[200px] border-gray-300" />
 
-      {/* {data.data.cards[0].card.card.gridElements.infoWithStyle.info.map(
-        (item, index) => (
-          <p key={index}>{item.action.text}</p>
-        )
-      )} */}
+      <hr className="border-t w-[1130px] my-[40px] mx-[200px] border-gray-300" />
     </>
   );
 };
-
-export default WhatsOnYourMind;
+// e0839ff574213e6f35b3899ebf1fc597  data.cards[1].card.card.gridElements.infoWithStyle.restaurants[0].
+export default TopRestaurantChains;
